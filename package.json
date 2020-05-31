@@ -2,7 +2,7 @@
   "name": "library-web-app",
   "version": "1.0.0",
   "description": "Simple Node web app",
-  "main": "index.js",
+  "main": "sever.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/dris1995/library-web-app/issues"
   },
-  "homepage": "https://github.com/dris1995/library-web-app#readme"
+  "homepage": "https://github.com/dris1995/library-web-app#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
