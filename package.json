@@ -2,10 +2,11 @@
   "name": "library-web-app",
   "version": "1.0.0",
   "description": "Simple Node web app",
-  "main": "sever.js",
+  "main": "./src/app.js",
   "scripts": {
-    "dev": "nodemon ./server.js",
-    "secondary": "cross-env PORT=3001 nodemon ./server.js",
+    "dev": "nodemon ./app.js",
+    "dev-debug": "DEBUG=app node ./src/app.js",
+    "secondary": "cross-env PORT=3001 nodemon ./src/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -21,7 +22,9 @@
   "dependencies": {
     "chalk": "4.0.0",
     "cross-env": "7.0.2",
-    "express": "4.17.1"
+    "debug": "4.1.1",
+    "express": "4.17.1",
+    "morgan": "1.10.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.4"
