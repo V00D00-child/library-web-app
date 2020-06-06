@@ -74,6 +74,20 @@ a,a:hover {
   background-color:#fff;
 }
 
+.book-row {
+  background-color: #fff;
+  padding-top: 30px;
+}
+
+.book-hr {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.row-connect {
+  background-color: #fff;
+}
+
 @media screen and (min-width: 768px) {
   #masthead h1 {
     font-size: 80px;
@@ -109,10 +123,11 @@ a,a:hover {
 .navbar-toggle {
   color:#fff;
   border-width:0;
+  background-color: #111166;
 }
 
 .navbar-toggle:hover {
-  background-color:#fff;
+  color:#000;
 }
 
 .panel {
