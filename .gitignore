@@ -1,5 +1,5 @@
 node_modules/
 
-.myDatabase
+myDatabase.sql
 
-.db-config
+db.json
