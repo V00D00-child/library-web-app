@@ -3,38 +3,9 @@ const chalk = require('chalk');
 const debug = require('debug')('app');
 const morgan = require('morgan');
 const path = require('path');
-const fs = require('fs');
 
 const app = express();
 const port = process.env.PORT || 3000;
-const mysql = require('mysql');
-
-// connect to database
-const dbConfig = JSON.parse(fs.readFileSync('db.json'));
-const connection = mysql.createConnection({
-  host: dbConfig.host,
-  user: dbConfig.user,
-  password: dbConfig.password,
-  database: dbConfig.database,
-});
-
-connection.connect((err) => {
-  if (err) {
-    debug(chalk.red(err));
-    throw err;
-  }
-  debug(chalk.green('CONNECTED'));
-
-  connection.query('SELECT * FROM books', (error, results) => {
-    if (error) {
-      throw error;
-    }
-    debug('Database Results:', results);
-  });
-  connection.end();
-  debug(chalk.blue('Ending connection'));
-});
-
 
 // logging for incoming request (tiny, combined)
 app.use(morgan('tiny'));

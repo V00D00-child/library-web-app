@@ -1,6 +1,10 @@
+/* eslint-disable padded-blocks */
 const express = require('express');
 
 const bookRouter = express.Router();
+const chalk = require('chalk');
+const debug = require('debug')('app:bookRoutes');
+const pool = require('../middleware/database');
 
 function router(nav) {
   const books = [
@@ -44,14 +48,27 @@ function router(nav) {
 
   bookRouter.route('/')
     .get((req, res) => {
-      res.render(
-        'bookListView',
-        {
-          nav,
-          title: 'Library',
-          books,
-        },
-      );
+
+      // use iffy to query database
+      (async function query() {
+        try {
+          const result = await pool.query('SELECT * FROM books');
+
+          // render UI
+          res.render(
+            'bookListView',
+            {
+              nav,
+              title: 'Library',
+              books: result,
+            },
+          );
+        } catch (error) {
+          debug(chalk.red(`Database query error: ${error}`));
+          throw error;
+        }
+      }());
+
     });
 
   bookRouter.route('/:id')
@@ -71,3 +88,19 @@ function router(nav) {
 }
 
 module.exports = router;
+
+
+// pool.query('SELECT * FROM books', (error, results) => {
+//   if (error) throw error;
+//   debug('Database Results:', results);
+
+//   // render UI
+//   res.render(
+//     'bookListView',
+//     {
+//       nav,
+//       title: 'Library',
+//       books: results,
+//     },
+//   );
+// });
