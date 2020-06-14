@@ -7,44 +7,6 @@ const debug = require('debug')('app:bookRoutes');
 const pool = require('../middleware/database');
 
 function router(nav) {
-  const books = [
-    {
-      title: 'War and Peace',
-      genre: 'Historical Fiction',
-      author: 'Le Nikloayevich Tolstoy',
-      read: false,
-    },
-    {
-      title: 'Book B',
-      genre: 'Science Fiction',
-      author: 'Author B',
-      read: false,
-    },
-    {
-      title: 'Book C',
-      genre: 'Fantasy',
-      author: 'Author C',
-      read: false,
-    },
-    {
-      title: 'Book D',
-      genre: 'Historical Fiction',
-      author: 'Author D',
-      read: false,
-    },
-    {
-      title: 'Book E',
-      genre: 'Historical Fiction',
-      author: 'Author E',
-      read: false,
-    },
-    {
-      title: 'Book F',
-      genre: 'Historical Fiction',
-      author: 'Author F',
-      read: false,
-    },
-  ];
 
   bookRouter.route('/')
     .get((req, res) => {
@@ -53,54 +15,65 @@ function router(nav) {
       (async function query() {
         try {
           const result = await pool.query('SELECT * FROM books');
+          debug(chalk.green('Result:', result));
 
           // render UI
-          res.render(
-            'bookListView',
-            {
-              nav,
-              title: 'Library',
-              books: result,
-            },
-          );
+          if (result) {
+            res.render(
+              'bookListView',
+              {
+                nav,
+                title: 'Library',
+                books: result,
+              },
+            );
+          }
         } catch (error) {
-          debug(chalk.red(`Database query error: ${error}`));
-          throw error;
+          debug(chalk.red(error));
+          res.status(500).json({ success: false, error: 'Sorry, books not found' });
+          res.end();
         }
       }());
 
     });
 
   bookRouter.route('/:id')
-    .get((req, res) => {
+    .all((req, res, next) => {
       const { id } = req.params;
-      res.render(
-        'bookView',
-        {
-          nav,
-          title: 'Library',
-          book: books[id],
-        },
-      );
+      (async function doRunQuery() {
+        try {
+          const singleResult = await pool.query('SELECT * FROM books WHERE id = ?', [id]);
+          debug(chalk.green('Single result:', singleResult));
+
+          // pass along the single book using array deconstruction
+          [req.book] = singleResult;
+          next();
+        } catch (error) {
+          debug(chalk.red(error));
+          res.status(500).json({ success: false, error: 'Sorry, book not found' });
+          res.end();
+        }
+      }());
+    })
+    .get((req, res) => {
+      debug('Single Result:', req.book);
+
+      if (req.book) {
+        res.render(
+          'bookView',
+          {
+            nav,
+            title: 'Library',
+            book: req.book,
+          },
+        );
+      } else {
+        res.status(404).json({ success: false, error: 'Sorry, book not found' });
+        res.end();
+      }
     });
 
   return bookRouter;
 }
 
 module.exports = router;
-
-
-// pool.query('SELECT * FROM books', (error, results) => {
-//   if (error) throw error;
-//   debug('Database Results:', results);
-
-//   // render UI
-//   res.render(
-//     'bookListView',
-//     {
-//       nav,
-//       title: 'Library',
-//       books: results,
-//     },
-//   );
-// });

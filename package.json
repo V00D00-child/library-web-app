@@ -5,7 +5,7 @@
   "main": "./src/app.js",
   "scripts": {
     "dev": "nodemon ./app.js",
-    "debug": "DEBUG=app:* nodemon ./src/app.js",
+    "debug": "DEBUG=app,app:* nodemon ./src/app.js",
     "debug:windows": "set DEBUG=app:* & nodemon ./src/app.js",
     "secondary": "cross-env PORT=4001 nodemon ./src/app.js",
     "test": "echo \"Error: no test specified\" && exit 1",
