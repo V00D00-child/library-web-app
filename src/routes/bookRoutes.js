@@ -15,7 +15,7 @@ function router(nav) {
       (async function query() {
         try {
           const result = await pool.query('SELECT * FROM books');
-          debug(chalk.green('Result:', result));
+          debug(chalk.green('Database SELECT all Books Result:', result));
 
           // render UI
           if (result) {
@@ -43,10 +43,12 @@ function router(nav) {
       (async function doRunQuery() {
         try {
           const singleResult = await pool.query('SELECT * FROM books WHERE id = ?', [id]);
-          debug(chalk.green('Single result:', singleResult));
+          debug(chalk.green('Database SELECT single Book Result:', singleResult));
 
           // pass along the single book using array deconstruction
           [req.book] = singleResult;
+          debug(chalk.green('test result:'), req.book);
+
           next();
         } catch (error) {
           debug(chalk.red(error));
