@@ -5,12 +5,20 @@ const morgan = require('morgan');
 const path = require('path');
 const bodyParser = require('body-parser');
 
+const cookieParser = require('cookie-parser');
+const session = require('express-session');
+
 const app = express();
 const port = process.env.PORT || 3000;
 
-// logging for incoming request (tiny, combined)
 app.use(morgan('tiny'));
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+
+// configure authentication with passport
+app.use(cookieParser());
+app.use(session({ secret: 'library' }));
+require('./middleware/passportConfig.js')(app);
 
 // serve static content
 app.use(express.static(path.join(__dirname, '../public')));
@@ -30,9 +38,11 @@ const nav = [
 
 const bookRouter = require('./routes/bookRoutes')(nav);
 const adminRouter = require('./routes/adminRoutes')(nav);
+const authRouter = require('./routes/authRoutes')(nav);
 
 app.use('/books', bookRouter);
 app.use('/admin', adminRouter);
+app.use('/auth', authRouter);
 
 app.get('/', (req, res) => {
   res.render(
@@ -44,6 +54,7 @@ app.get('/', (req, res) => {
   );
 });
 
+// listen for request
 app.listen(port, () => {
   debug(`Listening at port ${chalk.green(port)}`);
 });

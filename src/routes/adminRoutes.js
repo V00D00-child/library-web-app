@@ -4,7 +4,7 @@ const express = require('express');
 const adminRouter = express.Router();
 const chalk = require('chalk');
 const debug = require('debug')('app:adminRoutes');
-const pool = require('../middleware/database');
+const pool = require('../middleware/databaseConfig');
 
 function router(nav) {
   adminRouter.route('/')
