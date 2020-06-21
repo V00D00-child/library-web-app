@@ -17,7 +17,15 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 // configure authentication with passport
 app.use(cookieParser());
-app.use(session({ secret: 'library' }));
+app.use(session(
+  {
+    secret: 'library',
+    name: 'library-cookie',
+    proxy: true,
+    resave: true,
+    saveUninitialized: true,
+  },
+));
 require('./middleware/passportConfig.js')(app);
 
 // serve static content

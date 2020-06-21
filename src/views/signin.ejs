@@ -4,9 +4,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
     <title><%=title%></title>
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="/css/styles.css">
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
         integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 </head>
@@ -90,23 +90,19 @@
                                 <br>
                                 <div class="col-md-6 col-sm-3 text-center">
                                     <!-- Sign up form -->
-                                     <h2>Sign Up!</h2> <a href="/auth/signin">or sign in</a>
-                                     <br><br>
-
-                                    <form name="signUpForm" action="/auth/signup" method="post">
+                                    <h2>Sign In!</h2>
+                                    <br><br>
+                                    <form name="signUpForm" action="/auth/signin" method="post">
                                         <label for="userName">User Name:
                                             <input type="text" id="userName" name="userName" value="">
                                         </label>
-
+                                    
                                         <label for="password">Password:
                                             <input type="password" id="password" name="password" value="">
                                         </label>
+                                        <br><br>
                                         
-                                        <label for="roleType">Role type:
-                                            <input type="roleType" id="roleType" name="roleType" value="">
-                                        </label><br><br>
-
-                                        <input type="submit" value="Sign up" class="btn btn-primary">
+                                        <input type="submit" value="Sign in" class="btn btn-primary">
                                     </form>
                                 </div>
                             </div>

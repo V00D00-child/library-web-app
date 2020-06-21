@@ -1,6 +1,6 @@
 /* eslint-disable padded-blocks */
 const passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy;
+require('./strategies/local.strategy')();
 
 function passportConfig(app) {
 
@@ -9,13 +9,14 @@ function passportConfig(app) {
 
   // Stores user in session
   passport.serializeUser((user, done) => {
-    done(null, user.id);
+    done(null, user);
   });
 
   // Retrives user from session by id
   passport.deserializeUser((user, done) => {
     done(null, user);
   });
+
 }
 
 module.exports = passportConfig;
