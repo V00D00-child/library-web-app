@@ -1,5 +1,5 @@
 const fs = require('fs');
-const debug = require('debug')('app:bookRoutes');
+const debug = require('debug')('app:databaseConfig');
 const chalk = require('chalk');
 
 const util = require('util');

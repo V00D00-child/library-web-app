@@ -12,7 +12,7 @@ function passportConfig(app) {
     done(null, user);
   });
 
-  // Retrives user from session by id
+  // Retrives user from session
   passport.deserializeUser((user, done) => {
     done(null, user);
   });

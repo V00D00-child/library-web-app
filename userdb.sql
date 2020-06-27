@@ -6,6 +6,7 @@ CREATE TABLE App_User
   User_Id           BIGINT not null,
   User_Name         VARCHAR(36) not null,
   Encryted_Password VARCHAR(128) not null,
+  Salt VARCHAR(128) not null,
   ENABLED           BIT not null,
   PRIMARY KEY (User_Id),
   CONSTRAINT App_User_UK unique (User_Name)
@@ -96,6 +97,10 @@ UPDATE
 
 -- Update account by User_Id
 UPDATE
+
+-- Update password
+UPDATE App_User SET Salt = '' WHERE User_Id = 1;
+UPDATE App_User SET Encryted_Password = '' WHERE User_Id = 1;
 
 -- Delete user by User_Name(Role=admin)
 DELETE FROM App_User WHERE User_Name = 'Name';
