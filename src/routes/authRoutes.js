@@ -102,10 +102,28 @@ function router(nav) {
     }));
 
   authRouter.route('/profile')
+    .all((req, res, next) => {
+      if (req.user) {
+        next();
+      } else {
+        res.redirect('/');
+      }
+    })
     .get((req, res) => {
       // user is now attached to request object
-      res.json(req.user);
+      res.render('profile', {
+        nav,
+        title: 'Profile',
+        user: req.user,
+      });
     });
+
+  authRouter.route('/logout')
+    .get((req, res) => {
+      req.logOut();
+      res.redirect('/');
+    });
+
 
   return authRouter;
 

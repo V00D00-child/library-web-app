@@ -7,6 +7,13 @@ const debug = require('debug')('app:bookRoutes');
 const pool = require('../middleware/databaseConfig');
 
 function router(nav) {
+  bookRouter.use((req, res, next) => {
+    if (req.user) {
+      next();
+    } else {
+      res.redirect('/');
+    }
+  });
 
   bookRouter.route('/')
     .get((req, res) => {

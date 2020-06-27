@@ -7,6 +7,14 @@ const debug = require('debug')('app:adminRoutes');
 const pool = require('../middleware/databaseConfig');
 
 function router(nav) {
+  adminRouter.use((req, res, next) => {
+    if ((req.user) && (req.user.role === 'Role_Admin')) {
+      next();
+    } else {
+      res.redirect('/books');
+    }
+  });
+
   adminRouter.route('/')
     .all((req, res, next) => {
       (async function doGetIds() {
@@ -30,13 +38,12 @@ function router(nav) {
         'adminDashboard.ejs',
         {
           nav,
-          title: 'Library',
+          title: 'Admin Dashboard',
         },
       );
     })
     .post((req, res) => {
 
-      // build query from user input
       const title = req.body.formTitle;
       const author = req.body.formAuthor;
 
@@ -51,7 +58,7 @@ function router(nav) {
           res.end();
         }
       }());
-      res.send('Now Inserting book!');
+      res.redirect('/books');
     });
 
 
