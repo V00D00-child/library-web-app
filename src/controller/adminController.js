@@ -20,7 +20,6 @@ function adminController(nav) {
         // find next id and pass it along
         req.nextId = result[result.length - 1].id + 1;
         next();
-
       } catch (error) {
         debug(chalk.red(error));
         res.status(500).json({ success: false, error: 'Sorry, could not find ids' });
@@ -40,7 +39,6 @@ function adminController(nav) {
   }
 
   function doCreateBook(req, res) {
-
     const title = req.body.formTitle;
     const author = req.body.formAuthor;
 

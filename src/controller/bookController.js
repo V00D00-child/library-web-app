@@ -17,7 +17,6 @@ function bookController(nav) {
         const result = await pool.query('SELECT * FROM books');
         debug(chalk.green('Database SELECT all Books Result:'), result);
 
-        // render UI
         if (result) {
           res.render(
             'bookListView',

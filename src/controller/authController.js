@@ -49,7 +49,6 @@ function authContoller(nav) {
   }
 
   function createUser(req, res) {
-    // create user and give them a role
     const { userName, password, roleType } = req.body;
     const id = req.nextId;
     let roleId = 1;
@@ -58,7 +57,6 @@ function authContoller(nav) {
     }
 
     (async function doCreateUser() {
-      // generate password hash and salt
       const hashCode = await createHashWithSalt(password);
       try {
         const result = await pool.query('INSERT INTO App_User (User_Id, User_Name, Encryted_Password, ENABLED, Salt) values (?, ?, ?, ?, ?)',

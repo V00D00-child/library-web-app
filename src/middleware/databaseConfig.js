@@ -28,7 +28,6 @@ pool.getConnection((err, connection) => {
   }
   connection.release();
 
-  // Handle error after the release.
   if (err) throw err;
 });
 

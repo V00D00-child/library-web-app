@@ -34,11 +34,9 @@ app.use('/css', express.static(path.join(__dirname, '../node_modules/bootstrap/d
 app.use('/js', express.static(path.join(__dirname, '../node_modules/bootstrap/dist/js')));
 app.use('/js', express.static(path.join(__dirname, '../node_modules/jquery/dist')));
 
-// Set up template engine
 app.set('views', './src/views');
 app.set('view engine', 'ejs');
 
-// set up routers
 const nav = [
   { link: '/books', title: 'Book' },
   { link: '/auth/profile', title: 'Profile' },
@@ -63,7 +61,6 @@ app.get('/', (req, res) => {
   );
 });
 
-// listen for request
 app.listen(port, () => {
   debug(`Listening at port ${chalk.green(port)}`);
 });
